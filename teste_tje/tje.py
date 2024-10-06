@@ -15,9 +15,11 @@ pagina = book['Planilha1']
 
 #PERCORRE AS LINHAS DESEJADAS NA PLANILHA
 
-for linha in pagina.iter_rows(min_row=2, max_row=4, values_only=True):
-    processo_1 = linha[0]
-    status = linha[2]
+for linha in pagina.iter_rows(min_row=2):
+    if not linha[0].value:
+        break
+    processo_1 = linha[0].value
+    status = linha[2].value
     sleep(1)
     
     #PASSO A PASSO PARA INSERIR INFORMAÇÕES NO SITE E CONFIRMAR
@@ -41,14 +43,13 @@ for linha in pagina.iter_rows(min_row=2, max_row=4, values_only=True):
         if letra.isupper():
             letra = ' ' + letra
         palavra+=letra
-    for linha in pagina.iter_rows(min_row=2, max_row=5):
-        if linha[0].value == processo_1:
-            linha[2].value = str(palavra)
-            linha[3].value = str(data_processo)
-            break
+    if linha[0].value == processo_1:
+        linha[2].value = str(palavra)
+        linha[3].value = str(data_processo)
     book.save('teste_tje/processos.xlsx')
     driver.get('https://esaj.tjsp.jus.br/cpopg/open.do')
     continue
+
     
     
     
