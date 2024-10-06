@@ -17,6 +17,7 @@ pagina = book['Planilha1']
 
 for linha in pagina.iter_rows(min_row=2):
     if not linha[0].value:
+        print('\033[31mCOLUNA DE PROCESSOS NÃO POSSUI NENHUM VALOR\033[m')
         break
     processo_1 = linha[0].value
     status = linha[2].value
